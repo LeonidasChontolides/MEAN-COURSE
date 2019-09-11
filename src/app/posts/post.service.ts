@@ -2,6 +2,7 @@ import { Post } from './post.model';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 
 export class PostsService {
@@ -38,13 +39,23 @@ getPostUpdateListener() {
 
 addPost(title: string, content: string) {
 const post: Post = {id: null, title, content};
-this.http.post<{message: string, }>('//localhost:3000/api/posts', post)
-.subscribe((responseData) =>{
-  console.log(responseData.message);
+this.http.post<{message: string, postId: string }>('//localhost:3000/api/posts', post)
+.subscribe((responseData) => {
+  const id = responseData.postId;
+  post.id = id;
   this.posts.push(post);
   this.postsUpdated.next([...this.posts]);
 });
-
 }
+
+deletePost(postId: string) {
+  this.http.delete('//localhost:3000/api/posts/' + postId)
+  .subscribe(() => {
+  const updatedPosts = this.posts.filter(post => post.id !== postId);
+  this.posts = updatedPosts;
+  this.postsUpdated.next([...this.posts]);
+  });
+}
+
 
 }
