@@ -1,5 +1,6 @@
 import { Post } from './post.model';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -8,13 +9,12 @@ export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-constructor(private http: HttpClient) {
-
+constructor(private http: HttpClient, private router: Router) {
 }
 
 getPosts() {
 this.http.get<{message: string, posts: any }>('//localhost:3000/api/posts'
-) .pipe(map((postData) => {
+).pipe(map((postData) => {
 return postData.posts.map(post => {
   return {
     title: post.title,
@@ -27,7 +27,6 @@ return postData.posts.map(post => {
 this.posts = transformedPosts;
 this.postsUpdated.next([...this.posts]);
 });
-
 }
 
 getPostUpdateListener() {
@@ -48,6 +47,7 @@ this.http.post<{message: string, postId: string }>('//localhost:3000/api/posts',
   post.id = id;
   this.posts.push(post);
   this.postsUpdated.next([...this.posts]);
+  this.routerNavigate();
 });
 }
 
@@ -69,8 +69,13 @@ const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
 updatedPosts[oldPostIndex] = post;
 this.posts = updatedPosts;
 this.postsUpdated.next([...this.posts]);
-
+this.routerNavigate();
+this.router.navigate(['/']);
   });
+}
+
+routerNavigate() {
+  this.router.navigate(['/']);
 }
 
 }
