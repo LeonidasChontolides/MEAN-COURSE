@@ -16,6 +16,7 @@ enteredContent = '';
 post: Post;
 isLoading = false;
 form: FormGroup;
+imagePreview: string;
 private mode = 'create';
 private postId: string;
 
@@ -57,9 +58,13 @@ ngOnInit() {
 onImagePicked(event: Event) {
 const file = (event.target as HTMLInputElement).files[0];
 this.form.patchValue({image: file});
-this.form.updateValueAndValidity();
-console.log(file);
-console.log(this.form);
+this.form.get('image').updateValueAndValidity();
+// A data URL must be created to preview the image
+const reader = new FileReader();
+reader.onload = () => {
+this.imagePreview = reader.result as string;
+};
+reader.readAsDataURL(file);
 }
 
 onSavePost() {
