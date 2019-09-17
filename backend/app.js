@@ -13,9 +13,7 @@ console.log('Connected to Database!');
 console.log('Connection failed!');
 });
 
-
 app.use(bodyParser.json());
-
 
 app.use((req, res, next)=> {
   res.setHeader("Access-Control-Allow-Origin", "*");

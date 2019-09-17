@@ -39,11 +39,20 @@ getPost(id: string) {
 return this.http.get<{_id: string, title: string, content: string}>('//localhost:3000/api/posts/' + id);
 }
 
-addPost(title: string, content: string) {
-const post: Post = {id: null, title, content};
-this.http.post<{message: string, postId: string }>('//localhost:3000/api/posts', post)
+addPost(title: string, content: string, image: File) {
+//const post: Post = {id: null, title, content};
+const postData = new FormData();
+postData.append('title', title);
+postData.append('content', content);
+postData.append('image', image, title);
+this.http.post<{message: string, postId: string }>('//localhost:3000/api/posts', postData)
 .subscribe((responseData) => {
   const id = responseData.postId;
+  const post: Post ={
+    id: responseData.postId,
+    title,
+    content
+  };
   post.id = id;
   this.posts.push(post);
   this.postsUpdated.next([...this.posts]);
