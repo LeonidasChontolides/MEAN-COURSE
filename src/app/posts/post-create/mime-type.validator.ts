@@ -1,14 +1,18 @@
 import { AbstractControl } from '@angular/forms';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, of } from 'rxjs';
 
 // Validator acts as a function and not as a class.
 // Return of null means valid
 export const mimeType = (control: AbstractControl)
 : Promise<{[key: string]: any}> | Observable<{[key: string]: any}> => {
-const file = control.value as File;
-const fileReader = new FileReader();
+  if (typeof(control.value) === 'string') {
+return of(null);
+  }
+
+  const file = control.value as File;
+  const fileReader = new FileReader();
 // tslint:disable-next-line: deprecation
-const frObs = Observable.create((observer: Observer<{[key: string]: any}>) =>{
+  const frObs = Observable.create((observer: Observer<{[key: string]: any}>) => {
 fileReader.addEventListener('loadend', () => {
 const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4);
 let header = '';
@@ -42,5 +46,5 @@ observer.complete();
 fileReader.readAsArrayBuffer(file);
 }
 );
-return frObs;
+  return frObs;
 };

@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
@@ -14,6 +15,10 @@ console.log('Connection failed!');
 });
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
+// express static allows the request(that contains /images/) to continue and fetch the data
+// path.join allows to map the request /images to backend/images
+app.use("/images", express.static(path.join("backend/images")));
 
 app.use((req, res, next)=> {
   res.setHeader("Access-Control-Allow-Origin", "*");
