@@ -17,13 +17,7 @@ mongoose.connect("mongodb+srv://lhod38:xH34ZSy9d4ejr2Gn@cluster0-b2g3u.mongodb.n
   });
 
 app.use(bodyParser.json());
-<<<<<<< HEAD
-app.use(bodyParser.urlencoded({ extended: false}));
-// express static allows the request(that contains /images/) to continue and fetch the data
-// path.join allows to map the request /images to backend/images
-=======
 app.use(bodyParser.urlencoded({ extended: false }));
->>>>>>> 2bc5ad4d0693df709d5d486ab35fb547302ddad7
 app.use("/images", express.static(path.join("backend/images")));
 
 app.use((req, res, next) => {

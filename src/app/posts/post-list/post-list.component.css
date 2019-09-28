@@ -7,15 +7,6 @@ mat-spinner {
   margin: auto;
 }
 
-<<<<<<< HEAD
-.post-image{
-  width: 100%;
-}
-
-.post-image img{
-  width: 100%;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-=======
 mat-paginator {
   margin-top: 1rem;
 }
@@ -26,7 +17,6 @@ mat-paginator {
 
 .post-image {
   width: 100%;
->>>>>>> 2bc5ad4d0693df709d5d486ab35fb547302ddad7
 }
 
 .post-image img {

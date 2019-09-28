@@ -21,48 +21,10 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
 
-<<<<<<< HEAD
-ngOnInit() {
-  this.form = new FormGroup({
-    // FormControl() creates a single control in the form and takes a couple of
-    // arguments.
-    // The first argument is the beggining form state.
-    // The next argument allow us to attach validators or in general form control options.
-    // Such options would be a javascript object and in that object we can define things like asyncValidators,
-    // which are validators that take a time to finish, validators which are synchronous validators , etc..
-  title: new FormControl(null,
-    {validators: [Validators.required, Validators.minLength(3)]
-    }),
-  content: new FormControl(null,
-    {validators: [Validators.required]
-    }),
-  image: new FormControl(null, {
-    validators: [Validators.required],
-    asyncValidators: [mimeType]
-    })
-  });
-  this.route.paramMap.subscribe((paramMap: ParamMap) => {
-  if (paramMap.has('postId')) {
-  this.mode = 'edit';
-  this.postId = paramMap.get('postId');
-  this.isLoading = true;
-  this.postsService.getPost(this.postId).subscribe(postData => {
-  this.isLoading = false;
-  this.post = {id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath};
-  this.form.setValue({title: this.post.title, content: this.post.content, image: this.post.imagePath});
-  });
-} else {
-  this.mode = 'create';
-  this.postId = null;
-}
-});
-}
-=======
   constructor(
     public postsService: PostsService,
     public route: ActivatedRoute
   ) {}
->>>>>>> 2bc5ad4d0693df709d5d486ab35fb547302ddad7
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -111,17 +73,6 @@ ngOnInit() {
     };
     reader.readAsDataURL(file);
   }
-<<<<<<< HEAD
-  this.isLoading = true;
-  if (this.mode === 'create') {
-    this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
-  } else {
-    this.postsService.updatePost(
-      this.postId,
-      this.form.value.title,
-      this.form.value.content,
-      this.form.value.image
-=======
 
   onSavePost() {
     if (this.form.invalid) {
@@ -140,7 +91,6 @@ ngOnInit() {
         this.form.value.title,
         this.form.value.content,
         this.form.value.image
->>>>>>> 2bc5ad4d0693df709d5d486ab35fb547302ddad7
       );
     }
     this.form.reset();

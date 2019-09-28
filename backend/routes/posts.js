@@ -30,40 +30,6 @@ const storage = multer.diskStorage({
   }
 });
 
-<<<<<<< HEAD
-router.post("", multer({storage: storage}).single("image"), (req, res, next) =>{
-  const url = req.protocol + '://' + req.get("host");
-  const post= new Post({
-    title: req.body.title,
-    content: req.body.content,
-    imagePath: url + "/images/" + req.file.filename
-  });
-
-post.save().then(createdPost => {
-  res.status(201).json({
-    message: 'Post added succesfully!!',
-    post: {
-      ...createdPost,
-      id: createdPost._id,
-    }
-  });
-});
-});
-
-router.put("/:id", multer({storage: storage}).single("image"),
-(req, res, next) =>{
-  let imagePath = req.body.imagePath;
-  if (req.file) {
-    const url = req.protocol + '://' + req.get("host");
-    imagePath = url + "/images/" + req.file.filename
-  }
-  const post = new Post({
-    _id: req.body.id,
-    title: req.body.title,
-    content: req.body.content,
-    imagePath: imagePath
-  });
-=======
 router.post(
   "",
   multer({ storage: storage }).single("image"),
@@ -107,7 +73,6 @@ router.put(
     });
   }
 );
->>>>>>> 2bc5ad4d0693df709d5d486ab35fb547302ddad7
 
 router.get("", (req, res, next) => {
 
